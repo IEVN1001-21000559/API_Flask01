@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %}
+{% block contenido %}
+    <h1>A X B</h1>
+
+    <div class="mb-3">
+        <label for="A" class="form-label">A:</label>
+        <form action="/resultado" method="post">
+        <input type="text" class="form-control" id="a" name="a" placeholder="A">
+    </div>
+    <div class="mb-3">
+        <label for="b" class="form-label">B</label>
+        <input for="b" class="form-control" id="b" name="b" placeholder="B"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">calcular</button>
+    </form>
+
+{% endblock %}
