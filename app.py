@@ -79,8 +79,37 @@ def calcular_distancia():
 
 @app.route("/figuras", methods=['GET', 'POST'])
 def figuras():
-    return render_template('figuras.html')      
+    #return render_template('figuras.html')
 
+    area = None
+    figura_seleccionada = None
+    
+    if request.method == 'POST':
+        
+        figura_seleccionada = request.form.get('figura')
+        
+        if figura_seleccionada == 'rectangulo':
+            base = float(request.form.get('base'))
+            altura = float(request.form.get('altura'))
+            area = base * altura
+        
+        elif figura_seleccionada == 'triangulo':
+            base = float(request.form.get('base'))
+            altura = float(request.form.get('altura'))
+            area = 0.5 * base * altura
+        
+        elif figura_seleccionada == 'circulo':
+            radio = float(request.form.get('radio'))
+            area = math.pi * (radio ** 2)
+            area = round(area, 2) 
+        
+        elif figura_seleccionada == 'pentagono':
+            lado = float(request.form.get('lado'))
+            apotema = float(request.form.get('altura')) 
+            perimetro = 5 * lado
+            area = (perimetro * apotema) / 2
+
+    return render_template('figuras.html', area=area, figura=figura_seleccionada)
 
 
  

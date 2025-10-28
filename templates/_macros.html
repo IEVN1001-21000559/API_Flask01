@@ -1,7 +1,19 @@
-{%macro campo1(name,placeholder, type= 'text')%}
-<div class="mb-3">
-  <label for="{{name}}" class="form-label">{{name}}: </label>
-  <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}" placeholder="{{placeholder}}"/>
-</div>
+{# _macros.html #}
 
-{%endmacro%}
+{# Macro para los campos de TEXTO/NÚMERO #}
+{% macro campo1(name, label_text, type='text')%}
+<div class="mb-3">
+    <label for="{{name}}" class="form-label">{{ label_text }}:</label>
+    <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}" placeholder="{{label_text}}"/>
+</div>
+{% endmacro %}
+
+{# Macro para los RADIO BUTTONS #}
+{% macro campo2(name, value) %}
+<div class="form-check">
+    <input class="form-check-input" type="radio" id="{{value}}" name="{{name}}" value="{{value}}">
+    <label class="form-check-label" for="{{value}}">
+        {{ value | capitalize }}
+    </label>
+</div>
+{% endmacro %}
