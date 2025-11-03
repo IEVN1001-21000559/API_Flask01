@@ -1,33 +1,19 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 {% block contenido %}
-
+{% import "_macros.html" as macros %}
+ 
 <h1>Distancia entre dos puntos</h1>
-
-<form action="distancia" method="post">        
-
-    <h3>Punto 1</h3>
-    <div class="mb-3">
-        <label for="x1" class="form-label">x1:</label>
-        <input type="number" step="any" class="form-control" id="x1" name="x1" placeholder="Coordenada x1" required>
-    </div>
-    <div class="mb-3">
-        <label for="y1" class="form-label">y1:</label>
-        <input type="number" step="any" class="form-control" id="y1" name="y1" placeholder="Coordenada y1" required>
-    </div>
-
-    <h3>Punto 2</h3>
-    <div class="mb-3">
-        <label for="x2" class="form-label">x2:</label>
-        <input type="number" step="any" class="form-control" id="x2" name="x2" placeholder="Coordenada x2" required>
-    </div>
-    <div class="mb-3">
-        <label for="y2" class="form-label">y2:</label>
-        <input type="number" step="any" class="form-control" id="y2" name="y2" placeholder="Coordenada y2" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Calcular Distancia 😖</button>
-    <h3> la distancia es:  {{distancia}}</h3>
-
+<form action="/distancia" method="post" novalidate>
+    {{ macros.render_field(form.x1) }}
+    {{ macros.render_field(form.y1) }}
+    {{ macros.render_field(form.x2) }}
+    {{ macros.render_field(form.y2) }}
+    <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
-
+ 
+<p class="alert alert-success">La distancia entre los puntos
+    <strong>({{x1}}, {{y1}}), ({{x2}}, {{y2}})</strong>
+    es: <strong>{{dist|round(4)}}</p></strong>
+ 
+ 
 {% endblock %}

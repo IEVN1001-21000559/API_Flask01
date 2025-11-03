@@ -1,98 +1,98 @@
-{% extends "layout.html" %} 
-{% block contenido %} 
-{% import "_macros.html" as macros %}
+    {% extends "layout.html" %} 
+    {% block contenido %} 
+    {% import "_macros.html" as macros %}
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-        <div class="card">
-            <h1 class="card-header">Figuras Geometricas con sus areas</h1>
-            
-            <form action="/figuras" method="post">
-                <div class="card-body">
+            <div class="card">
+                <h1 class="card-header">Figuras Geometricas con sus areas</h1>
+                
+                <form action="/figuras" method="post">
+                    <div class="card-body">
+                        
+                        <h6 class="card-title">Seleccione una figura:</h6>
+                        
+                        <div class="mb-3">
+                            <div onchange="actualizarCampos()">
+                                {{ macros.campo2('figura', 'rectangulo') }}
+                                {{ macros.campo2('figura', 'triangulo') }}
+                                {{ macros.campo2('figura', 'circulo') }}
+                                {{ macros.campo2('figura', 'pentagono') }}
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div id="grupo-base" style="display: none;">
+                            {{ macros.campo1('base', 'Base', 'number') }}
+                        </div>
+                        
+                        <div id="grupo-altura" style="display: none;">
+                            {{ macros.campo1('altura', 'Altura', 'number') }}
+                        </div>
+                        
+                        <div id="grupo-radio" style="display: none;">
+                            {{ macros.campo1('radio', 'Radio', 'number') }}
+                        </div>
+                        
+                        <div id="grupo-lado" style="display: none;">
+                            {{ macros.campo1('lado', 'Lado', 'number') }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary mt-3">Calcular Área</button>
+                        
+                    </div>
                     
-                    <h6 class="card-title">Seleccione una figura:</h6>
-                    
-                    <div class="mb-3">
-                        <div onchange="actualizarCampos()">
-                            {{ macros.campo2('figura', 'rectangulo') }}
-                            {{ macros.campo2('figura', 'triangulo') }}
-                            {{ macros.campo2('figura', 'circulo') }}
-                            {{ macros.campo2('figura', 'pentagono') }}
+                    {% if area %}
+                    <div class="card-footer">
+                        <div class="alert  mb-2">
+                            <h3>El área del {{ figura }} es: {{ area }}</h3>
                         </div>
                     </div>
+                    {% endif %}
                     
-                    <hr>
-                    
-                    <div id="grupo-base" style="display: none;">
-                        {{ macros.campo1('base', 'Base', 'number') }}
-                    </div>
-                    
-                    <div id="grupo-altura" style="display: none;">
-                        {{ macros.campo1('altura', 'Altura', 'number') }}
-                    </div>
-                    
-                    <div id="grupo-radio" style="display: none;">
-                        {{ macros.campo1('radio', 'Radio', 'number') }}
-                    </div>
-                    
-                    <div id="grupo-lado" style="display: none;">
-                        {{ macros.campo1('lado', 'Lado', 'number') }}
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary mt-3">Calcular Área</button>
-                    
-                </div>
-                
-                {% if area %}
-                <div class="card-footer">
-                    <div class="alert  mb-2">
-                        <h3>El área del {{ figura }} es: {{ area }}</h3>
-                    </div>
-                </div>
-                {% endif %}
-                
-            </form>
+                </form>
+            </div>
+
         </div>
-
     </div>
-</div>
 
 
-<script>
-    function actualizarCampos() {
-        // Ocultar todos los grupos de campos primero
-        document.getElementById('grupo-base').style.display = 'none';
-        document.getElementById('grupo-altura').style.display = 'none';
-        document.getElementById('grupo-radio').style.display = 'none';
-        document.getElementById('grupo-lado').style.display = 'none';
+    <script>
+        function actualizarCampos() {
+            // Ocultar todos los grupos de campos primero
+            document.getElementById('grupo-base').style.display = 'none';
+            document.getElementById('grupo-altura').style.display = 'none';
+            document.getElementById('grupo-radio').style.display = 'none';
+            document.getElementById('grupo-lado').style.display = 'none';
 
-        // Variable para saber cuál radio está seleccionado
-        const figuraSeleccionada = document.querySelector('input[name="figura"]:checked');
+            // Variable para saber cuál radio está seleccionado
+            const figuraSeleccionada = document.querySelector('input[name="figura"]:checked');
 
-        if (!figuraSeleccionada) {
-            return; // Si no hay nada seleccionado, no mostrar nada
+            if (!figuraSeleccionada) {
+                return; // Si no hay nada seleccionado, no mostrar nada
+            }
+
+            // Mostrar campos basados en la figura seleccionada
+            if (figuraSeleccionada.value === 'rectangulo') {
+                document.getElementById('grupo-base').style.display = 'block';
+                document.getElementById('grupo-altura').style.display = 'block';
+            } 
+            else if (figuraSeleccionada.value === 'triangulo') {
+                document.getElementById('grupo-base').style.display = 'block';
+                document.getElementById('grupo-altura').style.display = 'block';
+            } 
+            else if (figuraSeleccionada.value === 'circulo') {
+                document.getElementById('grupo-radio').style.display = 'block';
+            } 
+            else if (figuraSeleccionada.value === 'pentagono') {
+                document.getElementById('grupo-altura').style.display = 'block'; 
+                document.getElementById('grupo-lado').style.display = 'block';
+            }
         }
+        
+        document.addEventListener('DOMContentLoaded', actualizarCampos);
+    </script>
 
-        // Mostrar campos basados en la figura seleccionada
-        if (figuraSeleccionada.value === 'rectangulo') {
-            document.getElementById('grupo-base').style.display = 'block';
-            document.getElementById('grupo-altura').style.display = 'block';
-        } 
-        else if (figuraSeleccionada.value === 'triangulo') {
-            document.getElementById('grupo-base').style.display = 'block';
-            document.getElementById('grupo-altura').style.display = 'block';
-        } 
-        else if (figuraSeleccionada.value === 'circulo') {
-            document.getElementById('grupo-radio').style.display = 'block';
-        } 
-        else if (figuraSeleccionada.value === 'pentagono') {
-            document.getElementById('grupo-altura').style.display = 'block'; 
-            document.getElementById('grupo-lado').style.display = 'block';
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', actualizarCampos);
-</script>
-
-{% endblock %}
+    {% endblock %}

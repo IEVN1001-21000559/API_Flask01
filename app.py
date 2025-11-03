@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import math                                 
- 
+import forms 
+
 app = Flask(__name__)
  
 @app.route('/')
@@ -50,32 +51,28 @@ def resultado():
 
 
 
- 
-@app.route("/distancia")
-def distancia ():
-    return render_template('distancia.html')
+
+    
+
+@app.route("/distancia",methods=['GET', 'POST'])
+def distanciaForms():
+    x1 = 0
+    y1 = 0
+    x2 = 0
+    y2 = 0
+    dist = 0
+    dist_cls = forms.Distancia(request.form)
+    if request.method == 'POST' and dist_cls.validate():
+        x1 = dist_cls.x1.data
+        y1 = dist_cls.y1.data
+        x2 = dist_cls.x2.data
+        y2 = dist_cls.y2.data
+        dist = math.sqrt((int(x2) - int(x1))**2 + (int(y2) - int(y1))**2)
+    return render_template('distancia.html',
+                           form = dist_cls, x1 = x1, y1 = y1, x2 = x2, y2 = y2, dist =dist)
 
 
-@app.route('/distancia', methods=['POST'])
-def calcular_distancia():
-    
-        x1 = float(request.form.get('x1'))
-        y1 = float(request.form.get('y1'))
-        x2 = float(request.form.get('x2'))
-        y2 = float(request.form.get('y2'))
-        
-     
-        delta_x = x2 - x1
-        delta_y = y2 - y1
-        
-        # Calcular la distancia
-        distancia = math.sqrt((delta_x ** 2) + (delta_y ** 2))
-        
-        # Redondear a dos decimales
-        resultado_final = round(distancia, 2)
-        
-        return render_template('distancia.html', distancia = distancia),f"<h1>La distancia entre el punto ({x1}, {y1}) y el punto ({x2}, {y2}) es {resultado_final}</h1>"
-    
+
 
 @app.route("/figuras", methods=['GET', 'POST'])
 def figuras():
@@ -110,6 +107,22 @@ def figuras():
             area = (perimetro * apotema) / 2
 
     return render_template('figuras.html', area=area, figura=figura_seleccionada)
+
+
+@app.route("/alumnos", methods=['GET', 'POST'])
+def alumnos():
+        math=0
+        nom=''
+        apell=''
+        email=''
+        alumno_clas=forms.UserForm(request.form)
+        if request.method=='POST'  and alumno_clas.validate():
+            math=alumno_clas.matricula.data
+            nom=alumno_clas.nombre.data
+            apell=alumno_clas.apellido.data
+            email=alumno_clas.email.data
+        return render_template('Alumnos.html', form=alumno_clas, math=math, nom=nom, apell=apell, email=email)
+    
 
 
  

@@ -1,0 +1,18 @@
+{% extends "layout.html" %} 
+{% block contenido %}
+    {% import "_macros.html" as macros %}
+
+    <h1>Registro de Alumnos</h1>
+    <form action="/alumnos" method="post" novalidate>
+        {{macros.render_field(form.matricula)}}
+        {{macros.render_field(form.nombre)}}
+        {{macros.render_field(form.apellido)}}
+        {{macros.render_field(form.email)}}
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+
+    <H2>Matricula: {{math}}</H2>
+    <h2>Nombre: {{nom}}</h2>
+    <h2>Apellido: {{apell}}</h2>    
+    <h2>email: {{email}}</h2>
+    {% endblock %}
